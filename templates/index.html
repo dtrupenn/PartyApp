@@ -1,6 +1,23 @@
 {% extends "layout.html" %}
 {% block title %}PartyStatus - Index{% endblock %}
 {% block body %}
-
+    <h1>Party Status</h1>
+    <form action="/" method=post>
+        <div class="row">
+            <div class="small-9">
+                <div class="row">
+                    <div class="small-3 columns">
+                        <label for="tags" class="right inline">Tags</label>
+                    </div>
+                    <div class="small-9 columns">
+                        <input type="text" id="tags" name="tags">
+                    </div>
+                </div>
+                <div class="small-2 small-offset-10 columns">
+                    <input type="submit" class="button small round" value="Status">
+                </div>
+            </div>
+        </div>
+    </form>
 {% endblock %}
 

@@ -1,8 +1,9 @@
 import os
 from flask import Flask, url_for, Response, request, render_template, \
-    send_from_directory
+    send_from_directory, make_response, redirect
 
 app = Flask(__name__)
+app.debug = True
 
 @app.route('/css/foundation.min.css', methods=['GET'])
 @app.route('/js/foundation.min.js', methods=['GET'])
@@ -12,9 +13,16 @@ app = Flask(__name__)
 def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def index():
-    return render_template('index.html')#'Index Page'
+    if request.method == 'GET':
+        return render_template('index.html')#'Index Page'
+    tags = request.form.get('tags')
+    return make_response(redirect('/party/%s' % tags))
+
+@app.route('/party/<tags>/', methods=['GET'])
+def show_party(tags):
+    return tags
 
 @app.route('/about')
 def about():
@@ -30,7 +38,3 @@ def contact():
 #    create_party()
 #else:
 #    show_party_page()
-
-@app.route('/party/<int:party_id>')
-def show_party(party_id):
-    return 'Party %d' % party_id
